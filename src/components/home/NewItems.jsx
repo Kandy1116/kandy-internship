@@ -4,6 +4,7 @@ import axios from "axios";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
+import Countdown from "../UI/Countdown";
 
 const NewItems = () => {
   const [items, setItems] = useState([]);
@@ -130,7 +131,7 @@ const NewItems = () => {
                       </Link>
                     </div>
                     {item.expiryDate && (
-                      <div className="de_countdown">{item.expiryDate}</div>
+                      <Countdown expiryDate={item.expiryDate} />
                     )}
 
                     <div className="nft__item_wrap">
