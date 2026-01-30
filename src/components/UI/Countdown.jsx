@@ -23,7 +23,7 @@ const Countdown = ({ expiryDate }) => {
     };
 
     const interval = setInterval(calcTime, 1000);
-    calcTime(); // Initial call
+    calcTime();
 
     return () => clearInterval(interval);
   }, [expiryDate]);
