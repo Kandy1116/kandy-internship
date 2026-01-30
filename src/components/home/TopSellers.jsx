@@ -15,6 +15,7 @@ const TopSellers = () => {
           axios.get(
             "https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers"
           ),
+          axios.get("/topSellers"),
           new Promise((resolve) => setTimeout(resolve, 3000)),
         ]);
         setSellers(response.data);
@@ -48,6 +49,7 @@ const TopSellers = () => {
                           height="50px"
                           borderRadius="50%"
                         />
+                        <Skeleton width="50px" height="50px" borderRadius="50%" />
                       </div>
                       <div className="author_list_info">
                         <Skeleton width="100px" height="20px" />
@@ -59,6 +61,8 @@ const TopSellers = () => {
                   ))
                 : sellers.map((seller) => (
                     <li key={seller.id} className="fade-in">
+                : sellers.map((seller, index) => (
+                    <li key={index} className="fade-in">
                       <div className="author_list_pp">
                         <Link to={`/author/${seller.authorId}`}>
                           <img
@@ -73,6 +77,7 @@ const TopSellers = () => {
                         <Link to={`/author/${seller.authorId}`}>
                           {seller.authorName}
                         </Link>
+                        <Link to={`/author/${seller.authorId}`}>{seller.authorName}</Link>
                         <span>{seller.price} ETH</span>
                       </div>
                     </li>

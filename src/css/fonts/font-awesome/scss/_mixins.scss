@@ -2,6 +2,7 @@
   display: inline-block;
   font: normal normal normal #{$fa-font-size-base}/#{$fa-line-height-base} FontAwesome; 
   font-size: inherit;
+  font-size: inherit; 
   text-rendering: auto; 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -21,6 +22,7 @@
       -ms-transform: scale($horiz, $vert);
           transform: scale($horiz, $vert);
 }
+
 @mixin sr-only {
   position: absolute;
   width: 1px;

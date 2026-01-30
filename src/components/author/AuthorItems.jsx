@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Skeleton from "../UI/Skeleton";
 
 const AuthorItems = ({ items, loading, author }) => {
+const AuthorItems = ({ items, author, loading }) => {
   return (
     <div className="de_tab_content">
       <div className="tab-1">
@@ -35,6 +36,16 @@ const AuthorItems = ({ items, loading, author }) => {
                           </div>
                         </div>
                       </div>
+                <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
+                  <div className="nft__item">
+                    <div className="author_list_pp">
+                      <Skeleton
+                        width="50px"
+                        height="50px"
+                        borderRadius="50%"
+                      />
+                    </div>
+                    <div className="nft__item_wrap">
                       <Skeleton width="100%" height="350px" />
                     </div>
                     <div className="nft__item_info">
@@ -62,6 +73,11 @@ const AuthorItems = ({ items, loading, author }) => {
                           src={author.authorImage}
                           alt=""
                         />
+                <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
+                  <div className="nft__item">
+                    <div className="author_list_pp">
+                      <Link to="">
+                        <img className="lazy" src={author.authorImage} alt="" />
                         <i className="fa fa-check"></i>
                       </Link>
                     </div>
