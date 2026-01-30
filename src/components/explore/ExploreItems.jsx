@@ -2,12 +2,30 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "../../api/axios";
 import Skeleton from "../UI/Skeleton";
+import Countdown from "../UI/Countdown";
 
 const ExploreItems = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    async function fetchExploreItems() {
+      try {
+        setLoading(true);
+        const [response] = await Promise.all([
+          axios.get("/explore"),
+          new Promise((resolve) => setTimeout(resolve, 3000)),
+        ]);
+        setItems(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+    }
+    fetchExploreItems();
+  }, []);
+
     fetchExploreItems();
   }, []);
 
@@ -45,6 +63,8 @@ const ExploreItems = () => {
             >
               <div className="nft__item">
                 <div className="author_list_pp">
+                  <Skeleton width="50px" height="50px" borderRadius="50%" />
+                </div>
                   <div
                     className="lazy pp-author skeleton-box"
                     style={{
@@ -73,6 +93,15 @@ const ExploreItems = () => {
                       </div>
                     </div>
                   </div>
+                  <Skeleton width="100%" height="350px" />
+                </div>
+                <div className="nft__item_info">
+                  <Skeleton width="100px" height="20px" />
+                  <div className="nft__item_price">
+                    <Skeleton width="60px" height="20px" />
+                  </div>
+                  <div className="nft__item_like">
+                    <Skeleton width="30px" height="15px" />
                   <div
                     className="lazy nft__item_preview skeleton-box"
                     style={{
@@ -109,6 +138,7 @@ const ExploreItems = () => {
         : items.map((item, index) => (
             <div
               key={index}
+              className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12 fade-in"
               className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
               style={{ display: "block", backgroundSize: "cover" }}
             >
@@ -123,6 +153,7 @@ const ExploreItems = () => {
                     <i className="fa fa-check"></i>
                   </Link>
                 </div>
+                {item.expiryDate && <Countdown expiryDate={item.expiryDate} />}
                 {item.expiryDate && (
                   <div className="de_countdown">{item.expiryDate}</div>
                 )}
