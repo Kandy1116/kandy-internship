@@ -1,15 +1,35 @@
-const https = require('https');
+const axios = require('axios');
 
-const url = 'https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?nftId=10147817';
+async function checkStructure() {
+  try {
+    const res1 = await axios.get('https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections');
+    if (!Array.isArray(res1.data));
+    let validNftId = 1;
+    let validAuthorId = 1;
 
-https.get(url, (resp) => {
-  let data = '';
-  resp.on('data', (chunk) => { data += chunk; });
-  resp.on('end', () => {
-    try {
-      const parsed = JSON.parse(data);
-    } catch (e) {
+    if (Array.isArray(res1.data) && res1.data.length > 0) {
+        validNftId = res1.data[0].nftId;
+        validAuthorId = res1.data[0].authorId;
     }
-  });
-}).on("error", (err) => {
-});
+
+
+    const res2 = await axios.get('https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems');
+    if (Array.isArray(res2.data) && res2.data.length > 0);
+
+    const res3 = await axios.get('https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers');
+    if (Array.isArray(res3.data) && res3.data.length > 0);
+
+    const res4 = await axios.get('https://us-central1-nft-cloud-functions.cloudfunctions.net/explore');
+    if (Array.isArray(res4.data) && res4.data.length > 0);
+
+    const res5 = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?nftId=${validNftId}`);
+
+    const res6 = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?authorId=${validAuthorId}`);
+
+
+
+  } catch (error) {
+  }
+}
+
+checkStructure();

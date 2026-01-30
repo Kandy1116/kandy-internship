@@ -1,13 +1,14 @@
-const https = require('https');
+const axios = require('axios');
 
-https.get('https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers', (resp) => {
-  let data = '';
-  resp.on('data', (chunk) => {
-    data += chunk;
-  });
+async function testApi() {
+  try {
+    const start = Date.now();
+    const response = await axios.get('https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections', { timeout: 5000 });
+  } catch (error) {
+    console.error("API Error:", error.message);
+    if (error.response) {
+    }
+  }
+}
 
-  resp.on('end', () => {
-  });
-
-}).on("error", (err) => {
-});
+testApi();
