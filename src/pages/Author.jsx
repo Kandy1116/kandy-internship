@@ -1,15 +1,48 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
 import { Link, useParams } from "react-router-dom";
-import AuthorImage from "../images/author_thumbnail.jpg";
+import axios from "../api/axios";
 
 const Author = () => {
   const { authorId } = useParams();
+  const [author, setAuthor] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
-    console.log("Author ID:", authorId);
+    window.scrollTo(0, 0);
+    fetchAuthor();
   }, [authorId]);
+
+  async function fetchAuthor() {
+    try {
+      setLoading(true);
+      const [response] = await Promise.all([
+        axios.get(`/authors?authorId=${authorId}`),
+        new Promise((resolve) => setTimeout(resolve, 3000)),
+      ]);
+      setAuthor(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  }
+
+  const handleFollow = () => {
+    setIsFollowing(!isFollowing);
+    if (isFollowing) {
+      setAuthor((prev) => ({ ...prev, followers: prev.followers - 1 }));
+    } else {
+      setAuthor((prev) => ({ ...prev, followers: prev.followers + 1 }));
+    }
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(author.address);
+    alert("Copied to clipboard!");
+  };
 
   return (
     <div id="wrapper">
@@ -27,41 +60,111 @@ const Author = () => {
         <section aria-label="section">
           <div className="container">
             <div className="row">
-              <div className="col-md-12">
-                <div className="d_profile de-flex">
-                  <div className="de-flex-col">
-                    <div className="profile_avatar">
-                      <img src={AuthorImage} alt="" />
-
-                      <i className="fa fa-check"></i>
-                      <div className="profile_name">
-                        <h4>
-                          Monica Lucas
-                          <span className="profile_username">@monicaaaa</span>
-                          <span id="wallet" className="profile_wallet">
-                            UDHUHWudhwd78wdt7edb32uidbwyuidhg7wUHIFUHWewiqdj87dy7
-                          </span>
-                          <button id="btn_copy" title="Copy Text">
-                            Copy
-                          </button>
-                        </h4>
+              {loading ? (
+                <div className="col-md-12">
+                  <div className="d_profile de-flex">
+                    <div className="de-flex-col">
+                      <div className="profile_avatar">
+                        <div
+                          className="skeleton-box"
+                          style={{
+                            width: "150px",
+                            height: "150px",
+                            borderRadius: "50%",
+                          }}
+                        ></div>
+                        <i className="fa fa-check"></i>
+                        <div className="profile_name">
+                          <h4>
+                            <div
+                              className="skeleton-box"
+                              style={{
+                                width: "200px",
+                                height: "24px",
+                                marginBottom: "10px",
+                              }}
+                            ></div>
+                            <span className="profile_username">
+                              <div
+                                className="skeleton-box"
+                                style={{ width: "100px", height: "16px" }}
+                              ></div>
+                            </span>
+                            <span id="wallet" className="profile_wallet">
+                              <div
+                                className="skeleton-box"
+                                style={{ width: "250px", height: "16px" }}
+                              ></div>
+                            </span>
+                          </h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="profile_follow de-flex">
+                      <div className="de-flex-col">
+                        <div className="profile_follower">
+                          <div
+                            className="skeleton-box"
+                            style={{ width: "100px", height: "20px" }}
+                          ></div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div className="profile_follow de-flex">
+                </div>
+              ) : (
+                <div className="col-md-12">
+                  <div className="d_profile de-flex">
                     <div className="de-flex-col">
-                      <div className="profile_follower">573 followers</div>
-                      <Link to="#" className="btn-main">
-                        Follow
-                      </Link>
+                      <div className="profile_avatar">
+                        <img src={author.authorImage} alt="" />
+
+                        <i className="fa fa-check"></i>
+                        <div className="profile_name">
+                          <h4>
+                            {author.authorName}
+                            <span className="profile_username">
+                              @{author.tag}
+                            </span>
+                            <span id="wallet" className="profile_wallet">
+                              {author.address}
+                            </span>
+                            <button
+                              id="btn_copy"
+                              title="Copy Text"
+                              onClick={handleCopy}
+                            >
+                              Copy
+                            </button>
+                          </h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="profile_follow de-flex">
+                      <div className="de-flex-col">
+                        <div className="profile_follower">
+                          {author.followers} followers
+                        </div>
+                        <Link
+                          to="#"
+                          className="btn-main"
+                          onClick={handleFollow}
+                        >
+                          {isFollowing ? "Unfollow" : "Follow"}
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems />
+                  <AuthorItems
+                    items={author.nftCollection}
+                    author={author}
+                    loading={loading}
+                  />
                 </div>
               </div>
             </div>
