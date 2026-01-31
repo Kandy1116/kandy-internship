@@ -41,7 +41,7 @@ const ItemDetails = () => {
                 ) : (
                   <img
                     src={item.nftImage}
-                    className="img-fluid img-rounded mb-sm-30 nft-image fade-in"
+                    className="img-fluid img-rounded mb-sm-30 nft-image"
                     alt=""
                   />
                 )}

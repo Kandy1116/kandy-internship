@@ -9,6 +9,7 @@ const Author = () => {
   const { authorId } = useParams();
   const [author, setAuthor] = useState({});
   const [loading, setLoading] = useState(true);
+  const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
     async function fetchAuthor() {
@@ -25,9 +26,23 @@ const Author = () => {
         setLoading(false);
       }
     }
+    window.scrollTo(0, 0);
     fetchAuthor();
   }, [authorId]);
 
+  const handleFollow = () => {
+    setIsFollowing(!isFollowing);
+    if (isFollowing) {
+      setAuthor((prev) => ({ ...prev, followers: prev.followers - 1 }));
+    } else {
+      setAuthor((prev) => ({ ...prev, followers: prev.followers + 1 }));
+    }
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(author.address);
+    alert("Copied to clipboard!");
+  };
   return (
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">
@@ -80,7 +95,11 @@ const Author = () => {
                               author.address
                             )}
                           </span>
-                          <button id="btn_copy" title="Copy Text">
+                          <button
+                            id="btn_copy"
+                            title="Copy Text"
+                            onClick={handleCopy}
+                          >
                             Copy
                           </button>
                         </h4>
@@ -96,8 +115,12 @@ const Author = () => {
                           `${author.followers} followers`
                         )}
                       </div>
-                      <Link to="#" className="btn-main">
-                        Follow
+                      <Link
+                        to="#"
+                        className="btn-main"
+                        onClick={handleFollow}
+                      >
+                        {isFollowing ? "Unfollow" : "Follow"}
                       </Link>
                     </div>
                   </div>
