@@ -18,7 +18,7 @@ const Author = () => {
       try {
         setLoading(true);
         const [response] = await Promise.all([
-          axios.get(`/authors?authorId=${authorId}`),
+          axios.get(`/authors?author=${authorId}`),
           new Promise((resolve) => setTimeout(resolve, 3000)),
         ]);
         setAuthor(response.data);
