@@ -20,7 +20,6 @@ const HotCollections = () => {
       setCollections(response.data);
       setLoading(false);
     } catch (error) {
-      console.error(error);
       setLoading(false);
     }
   }

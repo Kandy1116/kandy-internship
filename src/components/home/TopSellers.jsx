@@ -20,7 +20,6 @@ const TopSellers = () => {
         setSellers(response.data);
         setLoading(false);
       } catch (error) {
-        console.error(error);
         setLoading(false);
       }
     }
