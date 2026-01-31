@@ -7,6 +7,7 @@ import Countdown from "../UI/Countdown";
 const ExploreItems = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [visibleItems, setVisibleItems] = useState(8);
 
   useEffect(() => {
     async function fetchExploreItems() {
@@ -26,10 +27,32 @@ const ExploreItems = () => {
     fetchExploreItems();
   }, []);
 
+  const filterItems = (filter) => {
+    let sortedItems = [...items];
+
+    if (filter === "price_low_to_high") {
+      sortedItems.sort((a, b) => a.price - b.price);
+    } else if (filter === "price_high_to_low") {
+      sortedItems.sort((a, b) => b.price - a.price);
+    } else if (filter === "likes_high_to_low") {
+      sortedItems.sort((a, b) => b.likes - a.likes);
+    }
+
+    setItems(sortedItems);
+  };
+
+  const loadMore = () => {
+    setVisibleItems((prev) => prev + 4);
+  };
+
   return (
     <>
       <div>
-        <select id="filter-items" defaultValue="">
+        <select
+          id="filter-items"
+          defaultValue=""
+          onChange={(e) => filterItems(e.target.value)}
+        >
           <option value="">Default</option>
           <option value="price_low_to_high">Price, Low to High</option>
           <option value="price_high_to_low">Price, High to Low</option>
@@ -79,7 +102,7 @@ const ExploreItems = () => {
               </div>
             </div>
           ))
-        : items.map((item, index) => (
+        : items.slice(0, visibleItems).map((item, index) => (
             <div
               key={index}
               className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12 fade-in"
@@ -137,11 +160,21 @@ const ExploreItems = () => {
               </div>
             </div>
           ))}
-      <div className="col-md-12 text-center">
-        <Link to="" id="loadmore" className="btn-main lead">
-          Load more
-        </Link>
-      </div>
+      {visibleItems < items.length && (
+        <div className="col-md-12 text-center">
+          <Link
+            to=""
+            id="loadmore"
+            className="btn-main lead"
+            onClick={(e) => {
+              e.preventDefault();
+              loadMore();
+            }}
+          >
+            Load more
+          </Link>
+        </div>
+      )}
     </>
   );
 };
