@@ -7,9 +7,6 @@ import $ from 'jquery';
 
 window.jQuery = window.$ = $;
 
-import $ from 'jquery';
-window.jQuery = $;
-window.$ = $;
 
 ReactDOM.render(
   <App />,
