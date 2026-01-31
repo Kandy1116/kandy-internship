@@ -10,7 +10,10 @@ const Author = () => {
   const [author, setAuthor] = useState({});
   const [loading, setLoading] = useState(true);
 
+  const [isFollowing, setIsFollowing] = useState(false);
+
   useEffect(() => {
+    window.scrollTo(0, 0);
     async function fetchAuthor() {
       try {
         setLoading(true);
@@ -25,27 +28,8 @@ const Author = () => {
         setLoading(false);
       }
     }
-  const [isFollowing, setIsFollowing] = useState(false);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
     fetchAuthor();
   }, [authorId]);
-
-  async function fetchAuthor() {
-    try {
-      setLoading(true);
-      const [response] = await Promise.all([
-        axios.get(`/authors?authorId=${authorId}`),
-        new Promise((resolve) => setTimeout(resolve, 3000)),
-      ]);
-      setAuthor(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-      setLoading(false);
-    }
-  }
 
   const handleFollow = () => {
     setIsFollowing(!isFollowing);
@@ -113,65 +97,18 @@ const Author = () => {
                               author.address
                             )}
                           </span>
-                          <button id="btn_copy" title="Copy Text">
+                          <button
+                            id="btn_copy"
+                            title="Copy Text"
+                            onClick={handleCopy}
+                          >
                             Copy
                           </button>
                         </h4>
-              {loading ? (
-                <div className="col-md-12">
-                  <div className="d_profile de-flex">
-                    <div className="de-flex-col">
-                      <div className="profile_avatar">
-                        <div
-                          className="skeleton-box"
-                          style={{
-                            width: "150px",
-                            height: "150px",
-                            borderRadius: "50%",
-                          }}
-                        ></div>
-                        <i className="fa fa-check"></i>
-                        <div className="profile_name">
-                          <h4>
-                            <div
-                              className="skeleton-box"
-                              style={{
-                                width: "200px",
-                                height: "24px",
-                                marginBottom: "10px",
-                              }}
-                            ></div>
-                            <span className="profile_username">
-                              <div
-                                className="skeleton-box"
-                                style={{ width: "100px", height: "16px" }}
-                              ></div>
-                            </span>
-                            <span id="wallet" className="profile_wallet">
-                              <div
-                                className="skeleton-box"
-                                style={{ width: "250px", height: "16px" }}
-                              ></div>
-                            </span>
-                          </h4>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="profile_follow de-flex">
-                      <div className="de-flex-col">
-                        <div className="profile_follower">
-                          <div
-                            className="skeleton-box"
-                            style={{ width: "100px", height: "20px" }}
-                          ></div>
-                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ) : (
-                <div className="col-md-12">
-                  <div className="d_profile de-flex">
+                  <div className="profile_follow de-flex">
                     <div className="de-flex-col">
                       <div className="profile_follower">
                         {loading ? (
@@ -180,57 +117,22 @@ const Author = () => {
                           `${author.followers} followers`
                         )}
                       </div>
-                      <Link to="#" className="btn-main">
-                        Follow
+                      <Link
+                        to="#"
+                        className="btn-main"
+                        onClick={handleFollow}
+                      >
+                        {isFollowing ? "Unfollow" : "Follow"}
                       </Link>
-                      <div className="profile_avatar">
-                        <img src={author.authorImage} alt="" />
-
-                        <i className="fa fa-check"></i>
-                        <div className="profile_name">
-                          <h4>
-                            {author.authorName}
-                            <span className="profile_username">
-                              @{author.tag}
-                            </span>
-                            <span id="wallet" className="profile_wallet">
-                              {author.address}
-                            </span>
-                            <button
-                              id="btn_copy"
-                              title="Copy Text"
-                              onClick={handleCopy}
-                            >
-                              Copy
-                            </button>
-                          </h4>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="profile_follow de-flex">
-                      <div className="de-flex-col">
-                        <div className="profile_follower">
-                          {author.followers} followers
-                        </div>
-                        <Link
-                          to="#"
-                          className="btn-main"
-                          onClick={handleFollow}
-                        >
-                          {isFollowing ? "Unfollow" : "Follow"}
-                        </Link>
-                      </div>
                     </div>
                   </div>
                 </div>
-              )}
+              </div>
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
                   <AuthorItems
                     items={author.nftCollection}
-                    loading={loading}
-                    author={author}
                     author={author}
                     loading={loading}
                   />
