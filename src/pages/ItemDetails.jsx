@@ -50,7 +50,9 @@ const ItemDetails = () => {
                   {loading ? (
                     <Skeleton width="300px" height="40px" />
                   ) : (
-                    <h2>{item.title}</h2>
+                    <h2>
+                      {item.title} #{item.tag}
+                    </h2>
                   )}
 
                   <div className="item_info_counts">
@@ -108,8 +110,9 @@ const ItemDetails = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="de_tab tab_simple">
-                    <div className="de_tab_content">
+                  <div className="spacer-40"></div>
+                  <div className="d-flex flex-row">
+                    <div className="mr40">
                       <h6>Creator</h6>
                       <div className="item_author">
                         <div className="author_list_pp">
@@ -141,18 +144,18 @@ const ItemDetails = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="spacer-40"></div>
-                    <h6>Price</h6>
-                    <div className="nft-item-price">
-                      {loading ? (
-                        <Skeleton width="100px" height="40px" />
-                      ) : (
-                        <>
-                          <img src={EthImage} alt="" />
-                          <span>{item.price}</span>
-                        </>
-                      )}
-                    </div>
+                  </div>
+                  <div className="spacer-40"></div>
+                  <h6>Price</h6>
+                  <div className="nft-item-price">
+                    {loading ? (
+                      <Skeleton width="100px" height="40px" />
+                    ) : (
+                      <>
+                        <img src={EthImage} alt="" />
+                        <span>{item.price}</span>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
