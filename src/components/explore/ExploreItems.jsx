@@ -157,7 +157,7 @@ const ExploreItems = () => {
       )}
       {visibleItems < items.length && (
         <div className="col-md-12 text-center">
-          <Link to="" id="loadmore" className="btn-main lead" onClick={(e) => {
+          <Link to="#" id="loadmore" className="btn-main lead" onClick={(e) => {
             e.preventDefault();
             loadMore();
           }}>
