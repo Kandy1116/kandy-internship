@@ -86,17 +86,17 @@ const Footer = () => {
               <h5>Community</h5>
               <ul>
                 <li>
-                  <Link to="#" className="no-cursor">
+                  <Link to="/" className="no-cursor" onClick={(e) => e.preventDefault()}>
                     Community
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="no-cursor">
+                  <Link to="/" className="no-cursor" onClick={(e) => e.preventDefault()}>
                     Documentation
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="no-cursor">
+                  <Link to="/" className="no-cursor" onClick={(e) => e.preventDefault()}>
                     Brand Assets
                   </Link>
                 </li>

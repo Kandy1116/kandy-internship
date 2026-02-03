@@ -71,15 +71,15 @@ const NewItems = () => {
                           <button>Buy Now</button>
                           <div className="nft__item_share">
                             <h4>Share</h4>
-                            <a href="#" target="_blank" rel="noreferrer">
+                            <button onClick={() => window.open("https://www.facebook.com/sharer/sharer.php?u=" + window.location.href, "_blank")}>
                               <i className="fa fa-facebook fa-lg"></i>
-                            </a>
-                            <a href="#" target="_blank" rel="noreferrer">
+                            </button>
+                            <button onClick={() => window.open("https://twitter.com/intent/tweet?url=" + window.location.href, "_blank")}>
                               <i className="fa fa-twitter fa-lg"></i>
-                            </a>
-                            <a href="#">
+                            </button>
+                            <button onClick={() => window.location.href = "mailto:?body=" + window.location.href}>
                               <i className="fa fa-envelope fa-lg"></i>
-                            </a>
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -124,15 +124,15 @@ const NewItems = () => {
                           <button>Buy Now</button>
                           <div className="nft__item_share">
                             <h4>Share</h4>
-                            <a href="#" target="_blank" rel="noreferrer">
+                            <button onClick={() => window.open("https://www.facebook.com/sharer/sharer.php?u=" + window.location.href, "_blank")}>
                               <i className="fa fa-facebook fa-lg"></i>
-                            </a>
-                            <a href="#" target="_blank" rel="noreferrer">
+                            </button>
+                            <button onClick={() => window.open("https://twitter.com/intent/tweet?url=" + window.location.href, "_blank")}>
                               <i className="fa fa-twitter fa-lg"></i>
-                            </a>
-                            <a href="#">
+                            </button>
+                            <button onClick={() => window.location.href = "mailto:?body=" + window.location.href}>
                               <i className="fa fa-envelope fa-lg"></i>
-                            </a>
+                            </button>
                           </div>
                         </div>
                       </div>

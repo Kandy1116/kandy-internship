@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const HeaderExplore = () => {
   return (
@@ -19,17 +20,17 @@ const HeaderExplore = () => {
               placeholder="search item here..."
               type="text"
             />{" "}
-            <a href="#" id="btn-submit">
+            <Link to="" id="btn-submit" onClick={(e) => e.preventDefault()}>
               <i className="fa fa-search bg-color-secondary"></i>
-            </a>
+            </Link>
             <div className="clearfix"></div>
           </div>
         </form>
 
         <div id="item_category" className="dropdown">
-          <a href="#" className="btn-selector">
+          <Link to="" className="btn-selector" onClick={(e) => e.preventDefault()}>
             All categories
-          </a>
+          </Link>
           <ul>
             <li className="active">
               <span>All categories</span>
@@ -62,9 +63,9 @@ const HeaderExplore = () => {
         </div>
 
         <div id="buy_category" className="dropdown">
-          <a href="#" className="btn-selector">
+          <Link to="" className="btn-selector" onClick={(e) => e.preventDefault()}>
             Buy Now
-          </a>
+          </Link>
           <ul>
             <li className="active">
               <span>Buy Now</span>
@@ -79,9 +80,9 @@ const HeaderExplore = () => {
         </div>
 
         <div id="items_type" className="dropdown">
-          <a href="#" className="btn-selector">
+          <Link to="" className="btn-selector" onClick={(e) => e.preventDefault()}>
             All Items
-          </a>
+          </Link>
           <ul>
             <li className="active">
               <span>All Items</span>
