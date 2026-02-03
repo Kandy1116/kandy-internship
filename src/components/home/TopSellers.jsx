@@ -10,11 +10,7 @@ const TopSellers = () => {
   useEffect(() => {
     async function fetchTopSellers() {
       try {
-        setLoading(true);
-        const [response] = await Promise.all([
-          axios.get("/topSellers"),
-          new Promise((resolve) => setTimeout(resolve, 3000)),
-        ]);
+        const response = await axios.get("/topSellers");
         setSellers(response.data);
         setLoading(false);
       } catch (error) {
@@ -55,7 +51,7 @@ const TopSellers = () => {
                     </li>
                   ))
                 : sellers.map((seller) => (
-                    <li key={seller.id} className="fade-in">
+                    <li key={seller.id} data-aos="fade-right" data-aos-duration="1500">
                       <div className="author_list_pp">
                         <Link to={`/author/${seller.authorId}`}>
                           <img
