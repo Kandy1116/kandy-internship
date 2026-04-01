@@ -1,20 +1,9 @@
-This is an NFT marketplace internship project that demonstrates building and styling a web-based NFT platform interface using HTML, CSS, and JavaScript.
+A hands-on NFT platform project showcasing smart contract interactions and frontend integration.
 
-Tech Stack
+Tech Stack: HTML, CSS, JavaScript, Web3.js, Solidity
 
-HTML
-CSS
-JavaScript
+Run Locally:
+1. Clone repo: `git clone https://github.com/Kandy1116/NFTInternship.git`
+2. Open `index.html` in browser or use a local server
 
-Prerequisites
-
-Node.js installed
-
-Getting Started
-
-To start the application, please follow the steps below
-
-npm install
-
-npm start
-
+Live Demo: [NFTInternship Live](https://your-demo-link.vercel.app)
